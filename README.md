@@ -14,6 +14,6 @@ to
 ```
 </Variables>
 ```
-and paste it on the line where all the variables are saved.
+and overwrite it on the line where all the variables are saved.
 ##### Wait! Here's Warning!! Important!!!
 if you're about to porting our codes on your precious vehicle (especially if you didn't uploaded on somewhere), __Make sure to make its backup file before you take these actions!!!__
