@@ -1,0 +1,13 @@
+  <Variables>
+    <Setter variable="Aggression" function="40" priority="0" />
+    <Setter variable="Distance" function="13" priority="0" />
+    <Setter variable="Steer" function="clamp(    sin(TrackerCore-Heading)+AngleOfSlip/90-YawRate/150   ,-1,1)*(abs(AngleOfSlip)&lt;90)" priority="0" />
+    <Setter variable="Acc" function="clamp(    (  ZDiff*sign(cos(Heading)) + XDiff*sign(sin(Heading))  -GS/(Aggression/25)*(1+pingpong(Heading,45)/45/1.95)*(abs(AngleOfSlip)&gt;90))/30    ,-1/(1-clamp(GS/2*(abs(AngleOfSlip)&lt;90)+2,-20,0)),1)*(Stucked=0)" priority="0" />
+    <Setter variable="Stop" function="asin(    clamp01(Acc*sign(abs(AngleOfSlip)&gt;90&amp;Acc&lt;0))    )" priority="0" />
+    <Setter variable="TrackerCore" function="(ZDiff&lt;0?-(XDiff/((-ZDiff)/10+abs(XDiff)/10))*9+180:(XDiff/(ZDiff/10+abs(XDiff)/10))*9)" priority="0" />
+    <Setter variable="ZDiff" function="Latitude+((TargetDistance*(Aggression/12.5)*cos(TargetElevation))*cos(TargetHeading))-Latitude+ZDiff_rate*3-rate(Latitude)*2.3-(cos(Heading)*Distance*(TargetSelected?2.65-Distance/7*0.1:0)*clamp01(GS/10))   " priority="0" />
+    <Setter variable="XDiff" function="Longitude+((TargetDistance*(Aggression/12.5)*cos(TargetElevation))*sin(TargetHeading))-Longitude+XDiff_rate*3-rate(Longitude)*2.3-(sin(Heading)*Distance*(TargetSelected?2.65-Distance/7*0.1:0)*clamp01(GS/10))" priority="0" />
+    <Setter variable="ZDiff_rate" function="rate(Latitude+((TargetDistance*4*cos(TargetElevation))*cos(TargetHeading)))*(TargetSelected?1:0)/(1+TargetDistance/(Aggression/2))" priority="0" />
+    <Setter variable="XDiff_rate" function="rate(Longitude+((TargetDistance*4*cos(TargetElevation))*sin(TargetHeading)))*(TargetSelected?1:0)/(1+TargetDistance/(Aggression/2))" priority="0" />
+    <Setter variable="Stucked" function="clamp01(smooth((Stop=0&amp;Acc&lt;0?-Acc:Acc)&gt;0.5&amp;GS&lt;5&amp;TargetDistance&gt;Distance?15:0,((Stop=0&amp;Acc&lt;0?-Acc:Acc)&gt;0.5&amp;GS&lt;5&amp;TargetDistance&gt;Distance?8:(GS&gt;5&amp;TargetSelected?90:0)))-10)" priority="0" />
+  </Variables>
